@@ -1,5 +1,7 @@
 class Quiz {
   // this a comment
+  //   second comment
+
   constructor(questions, timeLimit, timeRemaining) {
     this.questions = questions;
     this.timeLimit = timeLimit;
