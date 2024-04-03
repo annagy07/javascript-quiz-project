@@ -1,7 +1,4 @@
 class Quiz {
-  // YOUR CODE HERE:
-  //
-  // 1. constructor (questions, timeLimit, timeRemaining)
   constructor(questions, timeLimit, timeRemaining) {
     this.questions = questions;
     this.timeLimit = timeLimit;
@@ -9,6 +6,7 @@ class Quiz {
     this.correctAnswers = 0;
     this.currentQuestionIndex = 0;
   }
+
   getQuestion() {
     return this.questions[this.currentQuestionIndex];
   }
@@ -22,7 +20,6 @@ class Quiz {
     while (currentIndex != 0) {
       let randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-
       [this.questions[currentIndex], this.questions[randomIndex]] = [
         this.questions[randomIndex],
         this.questions[currentIndex],
@@ -31,7 +28,8 @@ class Quiz {
   }
 
   checkAnswer(answer) {
-    if (answer) {
+    let currentQuestion = this.questions[this.currentQuestionIndex];
+    if (answer === currentQuestion.answer) {
       this.correctAnswers++;
     }
   }
@@ -42,7 +40,7 @@ class Quiz {
     } else if (this.currentQuestionIndex == this.questions.length) {
       return true;
     } else {
-      return null;
+      return undefined;
     }
   }
 }
