@@ -1,6 +1,6 @@
 class Quiz {
   // this a comment
-  //   second comment
+  // second comment
 
   constructor(questions, timeLimit, timeRemaining) {
     this.questions = questions;
@@ -19,7 +19,8 @@ class Quiz {
   }
 
   shuffleQuestions() {
-    let currentIndex = this.questions.length;
+    let currentIndex = this.questions.length - 1;
+
     while (currentIndex != 0) {
       let randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
