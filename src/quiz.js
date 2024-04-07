@@ -62,4 +62,3 @@ class Quiz {
     return sumDifficulty / this.questions.length;
   }
 }
-
