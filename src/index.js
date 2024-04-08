@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ),
     // Add more questions here
   ];
-  const quizDuration = 120; // 120 seconds (2 minutes)
+  let quizDuration = 120; // 120 seconds (2 minutes)
 
   /************  QUIZ INSTANCE  ************/
 
@@ -59,10 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
   function updateTimerDisplay() {
-    const minutes = Math.floor(quiz.timeRemaining / 60)
+    const minutes = Math.floor(quizDuration / 60)
       .toString()
       .padStart(2, "0");
-    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    const seconds = (quizDuration % 60).toString().padStart(2, "0");
 
     // Display the time remaining in the time remaining container
     const timeRemainingContainer = document.getElementById("timeRemaining");
@@ -74,14 +74,16 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  TIMER  ************/
 
   let timer;
-  quiz.timeRemaining = 120;
 
   timer = setInterval(() => {
-    quiz.timeRemaining -= 1;
+    quizDuration -= 1;
     updateTimerDisplay();
 
-    if (quiz.timeRemaining <= 0) {
-      clearInterval(timer);
+    if (
+      quizDuration <= 0 ||
+      quiz.currentQuestionIndex === quiz.questions.length
+    ) {
+      showResults();
     }
   }, 1000);
 
@@ -206,6 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length}  correct answers!`; // This value is hardcoded as a placeholder
+    clearInterval(timer);
   }
 
   restartButton.addEventListener("click", function restartQuiz() {
@@ -214,6 +217,18 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.currentQuestionIndex = 0;
     quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
+    quizDuration = 120;
+    timer = setInterval(() => {
+      quizDuration -= 1;
+      updateTimerDisplay();
+
+      if (
+        quizDuration <= 0 ||
+        quiz.currentQuestionIndex === quiz.questions.length
+      ) {
+        showResults();
+      }
+    }, 1000);
     showQuestion();
   });
 });
